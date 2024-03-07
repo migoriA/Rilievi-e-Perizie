@@ -1,0 +1,25 @@
+[
+  {
+    "_id": 1,
+    "name": "John Doe",
+    "password": "password",
+    "email": "john.doe@rilievi.it"
+  },
+  {
+    "_id": 2,
+    "name": "Jane Doe",
+    "password": "password",
+    "email": "jane.doe@rilievi.it"
+  },
+  {
+    "_id": 3,
+    "name": "Mario Rossi",
+    "password": "password",
+    "email": "mario.rossi@rilievi.it"
+  },
+  {
+    "nome": "Admin",
+    "password": "admin",
+    "email": "admin@rilievi.it"
+  }
+]
