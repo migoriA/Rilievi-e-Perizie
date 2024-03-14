@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 $font-style: 'Poppins', sans-serif;
 
-$logHeight: 30vh;
+$logHeight: 25rem;
 
 *{
   margin: 0;
@@ -20,6 +20,7 @@ $logHeight: 30vh;
   height: $logHeight;
   max-width: 800px;
   width: 50%;
+  min-height: calc($logHeight/1.5);
   border:1px solid rgba(96, 22, 162, 0.3);
   border-radius: 50px;
   background: linear-gradient(145deg, #470a80, #4e197f);
@@ -88,7 +89,7 @@ $logHeight: 30vh;
     color: #000;
   }
 }
-@media screen and (width < 700px){
+@media screen and (max-aspect-ratio: 1.7/2){
   // Your media screen styles here
   .login-container {
     width: 100%;
@@ -118,7 +119,7 @@ $logHeight: 30vh;
     }
   }
 }
-@media screen and (width >= 700px) and (width <= 1200px){
+@media screen and (max-aspect-ratio: 1.6/2){
   // Your media screen styles here
   .login-container {
     width: 75%;
