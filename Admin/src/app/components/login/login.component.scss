@@ -1,149 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-$font-style: 'Poppins', sans-serif;
-
-$logHeight: 25rem;
-
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: $font-style;
 }
-
-.login-container{
+.wrap{
+  height: 100%;
+  width: 100%;
+}
+.container{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-inline: auto;
-  margin-top: calc(50vh - #{$logHeight}/2);
-  height: $logHeight;
-  max-width: 800px;
-  width: 50%;
-  min-height: calc($logHeight/1.5);
-  border:1px solid rgba(96, 22, 162, 0.3);
-  border-radius: 50px;
-  background: linear-gradient(145deg, #470a80, #4e197f);
-  box-shadow:  10px 10px 60px #3e1465,
-              -10px -10px 60px #541a89;
-  color: #fff;
-  h2{
-    margin-bottom: 2.5rem;
-    font-weight: 900;
-    font-size: 20pt;
-    text-transform: uppercase;
-  }
-  .form-group{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 10px;
-    label{
-      font-size: 20pt;
-      font-weight: 900;
-      text-align: center;
-      margin-right: 0.5vw;
+  text-align: center;
+  height: 40vh;
+  width: 30vw;
+  border-radius: 20px;
+  .leftside{
+    flex: 4;
+    padding-left: 40px;
+    padding-top: 30px;
+    border-start-start-radius: 20px;
+    border-end-start-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    .header{
+      h1{
+        font-size: 2.5rem;
+        font-weight: bolder;
+        text-align: left;
+      }
+      p{
+        font-size: 1.25rem;
+        font-weight: 200;
+        text-align: left;
+        margin-bottom: -3rem;
+      }
     }
-    input{
-      padding: 0.5rem 0.5rem;
-      font-size: 15pt;
-      width: 20vw;
-      border: none;
-      border-radius: 10px;
-      border-bottom: 2px solid rgba(0,0,0,0.5);
-      background-color: rgba(56, 6, 102, 1);
-      color: #fff;
-      transition: all 0.3s ease-in-out;
-    }
-    input:focus-visible{
-      outline: none;
-      background-color: rgba(255,255,255,0.5);
-      color: #000;
-    }
-  }
-  div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  button{
-    padding: 0.5rem 2rem;
-    font-size: 15pt;
-    text-align: center;
-    align-items: center;
-    margin-top: 1.5rem;
-    text-transform: uppercase;
-    font-weight: 550;
-    font-family: $font-style;
-    background-color: rgba(56, 6, 102, 1);
-    color : #fff;
-    border:none;
-    border-bottom: 2px solid rgba(0,0,0,0.5);
-    border-radius: 10px;
-  }
-  button:hover{
-    outline: none;
-    background-color: rgba(255,255,255,0.5);
-    color: #000;
-  }
-}
-@media screen and (max-aspect-ratio: 1.7/2){
-  // Your media screen styles here
-  .login-container {
-    width: 100%;
-    //height: 50%;
-    h2{
-      font-size: 15pt;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-    .form-group{
+    .form{
+      margin-top: 4rem;
+      margin-left: 2rem;
+      margin-right: 6rem;
+      gap: 2rem;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
       label{
-        font-size: 15pt;
-        font-weight: bold;
-        margin-right: 1vw;
+        margin-bottom: -1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
       }
       input{
-        padding: 0.5rem 0.5rem;
-        font-size: 12pt;
-        width: 60vw;
+        padding: 0.5rem;
+        border-radius: 10px;
+        font-size: 1.5rem;
+        border: 1px solid #ddd;
       }
-    }
-    button{
-      padding: 0.5rem 1rem;
-      margin-bottom: 15px;
-      margin-top: 9px;
-      font-size: 12pt;
+      button{
+        padding: 0.75rem;
+        border-radius: 10px;
+        font-size: 1rem;
+        
+        &:first-of-type{
+          margin-top: 1rem;
+          background-color: rgb(53, 58, 186);
+          color: #fff;
+          border: none;
+          margin-bottom: -1rem;
+        }
+        &:last-of-type{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+          background-color: #fff;
+          color: #000;
+          border: 1px solid #ddd;
+          svg{
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+        }
+      }
     }
   }
-}
-@media screen and (max-aspect-ratio: 1.6/2){
-  // Your media screen styles here
-  .login-container {
-    width: 75%;
-    //height: 60%;
-    h2{
-      font-size: 20pt;
-      margin-top: 10px;
-      //margin-bottom: 5vh;
-    }
-    .form-group{
-      label{
-        font-size: 20pt;
-        margin-right: 1vw;
-      }
-      input{
-        padding: 0.5rem 0.5rem;
-        font-size: 13pt;
-        width: 45vw;
-      }
-    }
-    button{
-      padding: 0.5rem 1rem;
-      margin-bottom: 10px;
-      font-size: 12pt;
-    }
+  .rightside{
+    background-color: rgb(53, 58, 186);
+    flex: 3;
+    height: 100%;
+    //border: 1px solid #000;
+    border-start-end-radius: 20px;
+    border-end-end-radius: 20px;
   }
 }
