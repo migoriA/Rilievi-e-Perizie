@@ -1,0 +1,17 @@
+<div class="container">
+  <nav>
+    <div class="title">
+      <h1>Home</h1>
+    </div>
+    <div class="rightSide">
+      <button (click)="onClick()">
+        <img id="userImg" src="https://cdn-icons-png.flaticon.com/512/219/219970.png">
+        <i class='bx bx-chevron-down'></i>
+        <ul class="collapse-menu" [class.collapse]="isCollapsed" >
+          <li><a>Log Out</a></li>
+        </ul>
+      </button>
+    </div>
+  </nav>
+</div>
+

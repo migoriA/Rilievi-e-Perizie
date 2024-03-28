@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { AsideBarComponent } from './components/aside-bar/aside-bar.component';
 import { ActiveClassDirective } from './components/aside-bar/active-class.directive';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ActiveClassDirective } from './components/aside-bar/active-class.direct
     HomeComponent,
     AsideBarComponent,
     ActiveClassDirective,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,3 +6,10 @@ $third-color: rgba(255, 201, 22, 0.425);
   padding: 0;
   box-sizing: border-box;
 }
+
+:host{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-grow: 1;
+}
