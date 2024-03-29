@@ -10,7 +10,7 @@
   height: 6rem;
   margin-top: 0.5rem;
   margin-right: 0.5rem;
-  border: 1px solid #000;
+  //border: 1px solid #000;
   nav{
     display: flex;
     align-items: center;
@@ -50,13 +50,40 @@
       .collapse-menu{
         position: absolute;
         top: 100%;
+        right: 5%;
         max-height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 2rem;
+        width: 6rem;
         transition: all 0.5s ease;
         overflow: hidden;
+        border: 1px solid #eee;
+        background-color: #eee;
+        li{
+          width: 100%;
+          a{
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 0.5rem;
+            text-decoration: none;
+            color: #000;
+            font-size: 0.75rem;
+            &:hover{
+              background-color: #ddd;
+            }
+          }
+        }
+        
       }
       .collapse{
+        visibility: hidden;
         max-height: 0;
-        
       }
     }
     
