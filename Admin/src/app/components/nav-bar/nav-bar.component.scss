@@ -1,6 +1,7 @@
 :host{
   display: flex;
-  flex-grow: 1;
+  height: 6rem;
+  align-items: center;
 }
 .container{
   display: flex;
@@ -20,7 +21,7 @@
     align-items: center;
     text-align: center;
     text-transform: uppercase;
-    width: 10vw;
+    width: 15vw;
     font-weight: 700;
     font-size: 1.5rem;
     //margin-top: 1rem;
@@ -60,7 +61,7 @@
         width: 6rem;
         transition: all 0.5s ease;
         overflow: hidden;
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
         background-color: #eee;
         li{
           width: 100%;

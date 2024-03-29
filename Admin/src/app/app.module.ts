@@ -8,6 +8,10 @@ import { HomeComponent } from './components/home/home.component';
 import { AsideBarComponent } from './components/aside-bar/aside-bar.component';
 import { ActiveClassDirective } from './components/aside-bar/active-class.directive';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { HomeCardsComponent } from './components/home-cards/home-cards.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { ListComponent } from './components/list/list.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,10 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     AsideBarComponent,
     ActiveClassDirective,
     NavBarComponent,
+    HomeCardsComponent,
+    UserListComponent,
+    ListComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,

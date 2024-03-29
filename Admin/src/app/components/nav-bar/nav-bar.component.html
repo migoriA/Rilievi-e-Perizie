@@ -1,7 +1,18 @@
 <div class="container">
   <nav>
     <div class="title">
-      <h1>Home</h1>
+        @if(router.url == '/home/dashboard'){
+          <h1>Dashboard</h1>
+        }
+        @else if(router.url == '/home/list'){
+          <h1>Elenco perizie</h1>
+        }
+        @else if(router.url == '/home/userlist'){
+          <h1>Elenco Dipendenti</h1>
+        }
+        @else if(router.url == '/home/map'){
+          <h1>Mappa</h1>
+        }
     </div>
     <div class="rightSide">
       <button (click)="onClick()">
