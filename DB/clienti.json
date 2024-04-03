@@ -1,0 +1,108 @@
+[
+  {
+    "nome": "Mario Rossi",
+    "data_nascita": "1980-05-15",
+    "professione": "Ingegnere",
+    "email": "mario.rossi@example.com",
+    "telefono": "+39 123456789",
+    "indirizzo": {
+      "via": "Via Roma 123",
+      "città": "Milano",
+      "CAP": "20121",
+      "provincia": "MI",
+      "paese": "Italia"
+    },
+    "polizze": [
+      {
+        "numero_polizza": "PL001",
+        "tipo": "Auto",
+        "compagnia_assicurativa": "Assicurazioni Italia",
+        "importo_annuo": 800,
+        "data_scadenza": "2024-12-31"
+      },
+      {
+        "numero_polizza": "PL002",
+        "tipo": "Casa",
+        "compagnia_assicurativa": "Generali",
+        "importo_annuo": 1200,
+        "data_scadenza": "2024-06-30"
+      }
+    ]
+  },
+  {
+    "nome": "Giulia Bianchi",
+    "data_nascita": "1992-09-20",
+    "professione": "Avvocato",
+    "email": "giulia.bianchi@example.com",
+    "telefono": "+39 987654321",
+    "indirizzo": {
+      "via": "Via Verdi 45",
+      "città": "Roma",
+      "CAP": "00184",
+      "provincia": "RM",
+      "paese": "Italia"
+    },
+    "polizze": [
+      {
+        "numero_polizza": "PL003",
+        "tipo": "Salute",
+        "compagnia_assicurativa": "AXA",
+        "importo_annuo": 1500,
+        "data_scadenza": "2024-11-30"
+      }
+    ]
+  },
+  {
+    "nome": "Laura Verdi",
+    "data_nascita": "1975-12-10",
+    "professione": "Medico",
+    "email": "laura.verdi@example.com",
+    "telefono": "+39 555123456",
+    "indirizzo": {
+      "via": "Via Garibaldi 78",
+      "città": "Napoli",
+      "CAP": "80132",
+      "provincia": "NA",
+      "paese": "Italia"
+    },
+    "polizze": [
+      {
+        "numero_polizza": "PL004",
+        "tipo": "Vita",
+        "compagnia_assicurativa": "Allianz",
+        "importo_annuo": 2000,
+        "data_scadenza": "2025-01-31"
+      },
+      {
+        "numero_polizza": "PL005",
+        "tipo": "Viaggio",
+        "compagnia_assicurativa": "Generali",
+        "importo_annuo": 300,
+        "data_scadenza": "2024-08-15"
+      }
+    ]
+  },
+  {
+    "nome": "Paolo Russo",
+    "data_nascita": "1985-06-25",
+    "professione": "Architetto",
+    "email": "paolo.russo@example.com",
+    "telefono": "+39 333987654",
+    "indirizzo": {
+      "via": "Corso Vittorio Emanuele 22",
+      "città": "Palermo",
+      "CAP": "90133",
+      "provincia": "PA",
+      "paese": "Italia"
+    },
+    "polizze": [
+      {
+        "numero_polizza": "PL006",
+        "tipo": "Casa",
+        "compagnia_assicurativa": "Assicurazioni Italia",
+        "importo_annuo": 1500,
+        "data_scadenza": "2024-10-20"
+      }
+    ]
+  }
+]

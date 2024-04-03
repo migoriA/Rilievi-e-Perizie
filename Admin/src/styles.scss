@@ -13,3 +13,15 @@ body,html{
   min-height: 100vh;
   display: flex;
 }
+
+@media screen and (max-width: 1440px) {
+  html{
+      font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 1980px) {
+  html{
+      font-size: 12px;
+  }
+}
