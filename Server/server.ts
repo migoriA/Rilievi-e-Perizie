@@ -128,6 +128,57 @@ function creaToken(user){
     return _jwt.sign(payLoad, SIMMETRIC_KEY)
 }
 
+
+app.use("/api/", (req,res,next) => {
+    if(!req.headers["authorization"]){
+        res.status(403).send("Token mancante")
+        //console.log("Dio cane")
+    }
+    else{
+        let token = req.headers["authorization"]
+        _jwt.verify(token, SIMMETRIC_KEY,(err,payload)=>{
+            if(err){
+                res.status(403).send("Token corrotto " + err)
+                console.error("Dio cane")
+            }
+            else{
+                let token = creaToken(payload)
+                console.log(token)
+                res.setHeader("authorization",token)
+                //! Fa si che la header authorization venga restituita al client
+                res.setHeader("access-control-expose-headers","authorization")
+                req["payload"] = payload
+                next()
+            }
+        })
+    }
+})
+
+
+app.get("/api/user/number",async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection("clienti")
+    let rq = collection.countDocuments()
+    rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
+app.get("/api/workers/number",async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection("utenti")
+    let rq = collection.countDocuments()
+    rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
+app.get("/api/perizie/number",async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection("Perizie")
+    let rq = collection.countDocuments()
+    rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
 //********************************************************************************************//
 // Default route e gestione degli errori
 //********************************************************************************************//
