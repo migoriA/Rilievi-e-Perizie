@@ -13,6 +13,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { ListComponent } from './components/list/list.component';
 import { MapComponent } from './components/map/map.component';
 import { ClientsListComponent } from './components/clients-list/clients-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ClientsListComponent } from './components/clients-list/clients-list.com
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

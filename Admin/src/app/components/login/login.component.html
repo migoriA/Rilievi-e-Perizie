@@ -5,15 +5,15 @@
         <h1>Log in</h1>
         <p>Welcome back! Insert your credentials</p>
       </div>
-      <div class="form">
+      <form class="form" [formGroup]="form">
         <div class="input-container">
           <label>User:</label>
-          <input type="text" />
+          <input type="text" formControlName = 'username'/>
           <label>Password:</label>
-          <input type="password" />
+          <input type="password" formControlName = 'password'/>
         </div>
         <div class="button-container">
-          <button routerLink="/home">Sign in</button>
+          <button (click)="logIn()" [disabled]="!form.valid">Sign in</button>
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@
             Sign in with google
           </button>
         </div>
-      </div>
+      </form>
     </div>
     <div class="rightside"></div>
   </div>
