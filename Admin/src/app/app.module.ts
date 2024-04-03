@@ -12,6 +12,7 @@ import { HomeCardsComponent } from './components/home-cards/home-cards.component
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ListComponent } from './components/list/list.component';
 import { MapComponent } from './components/map/map.component';
+import { ClientsListComponent } from './components/clients-list/clients-list.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MapComponent } from './components/map/map.component';
     UserListComponent,
     ListComponent,
     MapComponent,
+    ClientsListComponent,
   ],
   imports: [
     BrowserModule,
