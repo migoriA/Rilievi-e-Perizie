@@ -11,8 +11,9 @@ $font-style: 'Poppins', sans-serif;
 body,html{
   background-color: rgb(245, 245, 245);
   font-family: $font-style;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 1440px) {

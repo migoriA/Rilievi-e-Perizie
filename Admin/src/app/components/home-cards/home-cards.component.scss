@@ -16,14 +16,14 @@
     width: 100%;
     grid-template-columns: 0.5fr 1fr;
     grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
     .parent{
       grid-area: 1 / 2 / 4 / 3;
       border-radius: 20px;
       background-color: rgb(61, 67, 224);
       padding: 0;
-      margin-top: 1rem;
+      //margin-top: 1rem;
       
       &:hover{
         background-color: rgb(53, 57, 186);
@@ -41,7 +41,7 @@
       }
     }
     .card{
-      margin-top: 1rem;
+      //margin-top: 1rem;
       border-radius: 20px;
       background-color: rgb(61, 67, 224);
       .title{
