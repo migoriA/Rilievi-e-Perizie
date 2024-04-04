@@ -3,9 +3,10 @@ import { HomeService } from '../../service/home.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-home-cards',
-  templateUrl: './home-cards.component.html',
-  styleUrl: './home-cards.component.scss'
+    selector: 'app-home-cards',
+    templateUrl: './home-cards.component.html',
+    styleUrl: './home-cards.component.scss',
+    standalone: true
 })
 export class HomeCardsComponent {
   form: FormGroup = new FormGroup({

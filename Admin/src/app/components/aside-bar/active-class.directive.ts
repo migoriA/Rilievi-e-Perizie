@@ -1,7 +1,8 @@
 import { Directive, ElementRef, HostBinding, HostListener, Input} from '@angular/core';
 
 @Directive({
-  selector: '[appActiveClass]'
+    selector: '[appActiveClass]',
+    standalone: true
 })
 export class ActiveClassDirective {
   @Input('isOpen') ciao!:any

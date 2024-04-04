@@ -6,9 +6,11 @@ import { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    standalone: true,
+    imports: [ReactiveFormsModule]
 })
 export class LoginComponent {
   form : FormGroup = new FormGroup({
