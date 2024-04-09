@@ -7,21 +7,11 @@
   <div class="divider"></div>
   <div class="content">
     <div class="list">
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
-      <app-row></app-row>
+      @if(this.list){
+        @for(item of this.list; track $index){
+          <app-row [perizie]="item" ></app-row>
+        }
+      }
     </div>
   </div>
 </div>

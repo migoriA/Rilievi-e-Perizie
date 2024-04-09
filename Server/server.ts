@@ -21,7 +21,7 @@ const HTTPS_PORT: number = parseInt(process.env.HTTPS_PORT);
 let paginaErrore;
 const PRIVATE_KEY = _fs.readFileSync("./keys/privateKey.pem", "utf8");
 const CERTIFICATE = _fs.readFileSync("./keys/certificate.crt", "utf8");
-const SIMMETRIC_KEY = _fs.readFileSync("./keys/encriptionKey.txt","utf8")
+const SIMMETRIC_KEY = process.env.SIMMETRIC_KEY
 const CREDENTIALS = { "key": PRIVATE_KEY, "cert": CERTIFICATE };
 const https_server = _https.createServer(CREDENTIALS, app);
 
@@ -177,6 +177,17 @@ app.get("/api/perizie/number",async (req,res,next)=>{
     const collection = client.db(DBNAME).collection("Perizie")
     let rq = collection.countDocuments()
     rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
+app.get("/api/:collection/getPerizie", async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection(req.params.collection)
+    let rq = collection.find().toArray()
+    rq.then((data)=>{
+        let join = client.db(DBNAME).collection("utenti")
+        let rq = join.find().toArray().then((data2)=>{ res.send({"perizie":data,"utenti":data2})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)})
 })
 
 //********************************************************************************************//
