@@ -190,6 +190,14 @@ app.get("/api/:collection/getPerizie", async (req,res,next)=>{
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)})
 })
 
+app.get("/api/:collection", async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection(req.params.collection)
+    let rq = collection.find().toArray()
+    rq.then((data)=>{res.send(data)}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
 //********************************************************************************************//
 // Default route e gestione degli errori
 //********************************************************************************************//

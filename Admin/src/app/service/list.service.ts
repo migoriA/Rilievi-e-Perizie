@@ -11,4 +11,7 @@ export class ListService {
   getList(url:string){
     return this.request.InviaRichiesta("GET",url)
   }
+  getUser(){
+    return this.request.InviaRichiesta("GET","/api/utenti")
+  }
 }

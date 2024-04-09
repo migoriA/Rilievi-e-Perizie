@@ -1,3 +1,5 @@
-<p>{{perizie.codOp}}</p>
-<p>{{perizie.time}}</p>
-<p>{{perizie.desc}}</p>
+@if(list){
+    @for(item of keys; track $index){
+        <p>{{list[item]}}</p>
+    }
+}

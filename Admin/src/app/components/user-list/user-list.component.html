@@ -1,1 +1,18 @@
-<p>user-list works!</p>
+<div class="container">
+  <div class="header">
+    <span>Operatore</span>
+    <span>Email</span>
+  </div>
+  <div class="divider"></div>
+  <div class="content">
+    <div class="list">
+      @if(list){ 
+        @for(item of list; track $index){
+          @if(item.name != 'Admin'){
+            <app-row [list]="item"></app-row>
+          }
+        } 
+      }
+    </div>
+  </div>
+</div>
