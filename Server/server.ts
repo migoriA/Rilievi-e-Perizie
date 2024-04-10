@@ -198,6 +198,16 @@ app.get("/api/:collection", async (req,res,next)=>{
     rq.then((data)=>{res.send(data)}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
 
+app.post("/api/charts",async (req,res,next)=>{ 
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection('clienti')
+    let rq = collection.find().project({'_id':0,'polizze.importo':1,'polizze.data':1}).toArray()
+    rq.then((data)=>{
+        res.send(data)
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)})
+})
+
 //********************************************************************************************//
 // Default route e gestione degli errori
 //********************************************************************************************//

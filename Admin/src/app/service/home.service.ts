@@ -19,4 +19,8 @@ export class HomeService {
   getPerizieNumber(){
     return this.request.InviaRichiesta("GET",'/api/perizie/number')
   }
+
+  getChart(){
+    return this.request.InviaRichiesta("POST",'/api/charts')
+  }
 }
