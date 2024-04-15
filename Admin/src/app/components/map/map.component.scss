@@ -1,0 +1,21 @@
+:host{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-grow: 1;
+
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-grow: 1;
+    padding: 1rem;
+    padding-right: 2rem;
+    google-map{
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

@@ -174,7 +174,7 @@ app.get("/api/workers/number",async (req,res,next)=>{
 app.get("/api/perizie/number",async (req,res,next)=>{
     const client = new MongoClient(connectionString)
     await client.connect()
-    const collection = client.db(DBNAME).collection("Perizie")
+    const collection = client.db(DBNAME).collection("perizie")
     let rq = collection.countDocuments()
     rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
@@ -205,7 +205,18 @@ app.post("/api/charts",async (req,res,next)=>{
     let rq = collection.find().project({'_id':0,'polizze.importo':1,'polizze.data':1}).toArray()
     rq.then((data)=>{
         res.send(data)
-    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)})
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
+app.post('/api/markers',async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection('perizie')
+    let rq = collection.find().toArray()
+    rq.then((data)=>{
+        //console.log(data)
+        res.send(data)
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
 
 //********************************************************************************************//
