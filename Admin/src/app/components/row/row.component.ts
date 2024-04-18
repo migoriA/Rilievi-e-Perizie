@@ -17,11 +17,6 @@ export class RowComponent {
     
   }
   ngOnInit() {
-    console.log(2,this.list)
-    
     this.keys = Object.keys(this.list);
-
-    console.log(1,this.keys)
-    console.log(1,this.list)
   }
 }

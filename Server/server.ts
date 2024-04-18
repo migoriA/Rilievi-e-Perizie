@@ -155,26 +155,10 @@ app.use("/api/", (req,res,next) => {
 })
 
 
-app.get("/api/user/number",async (req,res,next)=>{
+app.get("/api/:collection/number",async (req,res,next)=>{
     const client = new MongoClient(connectionString)
     await client.connect()
-    const collection = client.db(DBNAME).collection("clienti")
-    let rq = collection.countDocuments()
-    rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
-})
-
-app.get("/api/workers/number",async (req,res,next)=>{
-    const client = new MongoClient(connectionString)
-    await client.connect()
-    const collection = client.db(DBNAME).collection("utenti")
-    let rq = collection.countDocuments()
-    rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
-})
-
-app.get("/api/perizie/number",async (req,res,next)=>{
-    const client = new MongoClient(connectionString)
-    await client.connect()
-    const collection = client.db(DBNAME).collection("perizie")
+    const collection = client.db(DBNAME).collection(req.params.collection)
     let rq = collection.countDocuments()
     rq.then((data)=>{res.send({"number":data})}).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })

@@ -9,11 +9,9 @@
     <div class="divider"></div>
     <div class="content">
       <div class="list">
-        @if(list){ 
-          @for(item of list; track $index){
-            @if(item.name != 'Admin'){
-              <app-row [list]="item"></app-row>
-            }
+        @if(listService.clients != {}){ 
+          @for(item of listService.clients; track $index){
+            <app-row [list]="{nome: item.nome, data: item.data_nascita.split('-').reverse().join('/'), professione: item.professione, mail: item.email, tel:item.telefono}"></app-row>
           } 
         }
       </div>

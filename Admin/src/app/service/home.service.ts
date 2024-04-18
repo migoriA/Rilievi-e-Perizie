@@ -10,10 +10,10 @@ export class HomeService {
   constructor(private request: RequestService) { }
 
   getUserNumber(){
-    return this.request.InviaRichiesta("GET",'/api/user/number')
+    return this.request.InviaRichiesta("GET",'/api/clienti/number')
   }
   getWorkersNumber(){
-    return this.request.InviaRichiesta("GET",'/api/workers/number')
+    return this.request.InviaRichiesta("GET",'/api/utenti/number')
   }
 
   getPerizieNumber(){

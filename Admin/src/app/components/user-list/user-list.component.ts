@@ -15,13 +15,6 @@ export class UserListComponent {
     constructor(protected listService:ListService) {}
 
     ngOnInit(){
-        this.listService.getList("/api/utenti").then((result:AxiosResponse) => {
-            result.data.forEach((element:any) => {
-                delete element._id
-                delete element.password
-            })
-            this.list = result.data;
-            console.log(this.list);
-        }).catch(err => {console.error(err.message)})
+        this.listService.getUser()
     }
 }

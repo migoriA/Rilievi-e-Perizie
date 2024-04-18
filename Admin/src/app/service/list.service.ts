@@ -6,12 +6,20 @@ import { RequestService } from './request.service';
 })
 export class ListService {
   public users:any = {};
+  public clients:any = {};
   constructor(private request:RequestService) { }
 
-  getList(url:string){
-    return this.request.InviaRichiesta("GET",url)
+  getList(){
+    return this.request.InviaRichiesta("GET","/api/perizie/getPerizie")
+  }
+  getClients(){
+    this.request.InviaRichiesta("GET","/api/clienti").then((result:any) => {
+      this.clients = result.data;
+    }).catch(err => {console.error(err.message)})
   }
   getUser(){
-    return this.request.InviaRichiesta("GET","/api/utenti")
+    this.request.InviaRichiesta("GET","/api/utenti").then((result:any) => {
+      this.users = result.data;
+    }).catch(err => {console.error(err.message)})
   }
 }

@@ -15,7 +15,7 @@ export class ListComponent {
     constructor(protected listService:ListService) {}
 
     ngOnInit(){
-        this.listService.getList("/api/Perizie/getPerizie").then((result:AxiosResponse) => {
+        this.listService.getList().then((result:AxiosResponse) => {
             this.list = result.data.perizie;
             this.listService.users = result.data.utenti;
             

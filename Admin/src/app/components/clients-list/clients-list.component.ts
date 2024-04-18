@@ -17,19 +17,6 @@ export class ClientsListComponent {
     constructor(protected listService:ListService) {}
 
     ngOnInit(){
-        this.listService.getList("/api/clienti").then((result:AxiosResponse) => {
-            result.data.forEach((element:any) => {
-                delete element._id
-                this.indirizzo.push(element.indirizzo) 
-                this.polize.push(element.polizze) 
-                delete element.indirizzo
-                delete element.polizze
-
-                
-            })
-            console.log(this.indirizzo)
-            this.list = result.data;
-            console.log(this.list);
-        }).catch(err => {console.error(err.message)})
+        this.listService.getClients()
     }
 }
