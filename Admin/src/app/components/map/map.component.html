@@ -4,9 +4,10 @@
     width="100%" 
     [center]="center"
     [zoom]="zoom"
-    [options]="options">
-    @if(perizie){
-        @for(item of perizie; track perizie._id){
+    [options]="options"
+    >
+    @if(mapsService.perizie != {}){
+        @for(item of mapsService.perizie; track mapsService.perizie){
             <map-marker [position]="{'lat':+item.coor.split(',')[0],'lng':+item.coor.split(',')[1]}"
                         ></map-marker>
         }
