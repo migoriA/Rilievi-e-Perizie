@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RowComponent } from '../row/row.component';
 import { ListService } from '../../service/list.service';
 import { AxiosResponse } from 'axios';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-list',
@@ -12,7 +13,7 @@ import { AxiosResponse } from 'axios';
 })
 export class ListComponent {
     public list:any
-    constructor(protected listService:ListService) {}
+    constructor(protected listService:ListService,private router:Router) {}
 
     ngOnInit(){
         this.listService.getList().then((result:AxiosResponse) => {
@@ -20,10 +21,8 @@ export class ListComponent {
             this.listService.users = result.data.utenti;
             
             result.data.perizie.forEach((element:any) => {
-                delete element._id
                 delete element.img
                 delete element.coor
-                
             });
 
             this.list = this.list.map( (p:any) =>{

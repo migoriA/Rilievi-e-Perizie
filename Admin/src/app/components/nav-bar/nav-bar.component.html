@@ -16,6 +16,9 @@
         @else if(router.url == '/home/clients'){
           <h1>Elenco Clienti</h1>
         }
+        @else if(router.url.startsWith('/home/details')){
+          <h1>Dettagli</h1>
+        }
     </div>
     <div class="rightSide">
       <button (click)="onClick()">
