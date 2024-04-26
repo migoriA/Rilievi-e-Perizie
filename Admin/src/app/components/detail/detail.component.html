@@ -1,1 +1,29 @@
-<p>detail works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>{{name}}</h1>
+            <div class="container-row">
+                <p>Data: </p>
+                <span>{{data}}</span>
+            </div>
+            <div class="container-row">
+                <p>Ora: </p>
+                <span>{{ora}}</span>
+            </div>
+            <div class="container-row">
+                <p>Indirizzo:</p>
+            </div>
+            <div class="container-row">
+                <p>Descrizione: </p>
+                <span>{{listService.user.desc}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="edit">
+            <button>Modifica <i class='bx bxs-edit'></i></button>
+            <button>Mappa <i class='bx bx-map-pin' ></i></button>
+            <button>Visualizza immagini <i class='bx bx-image' ></i></button>
+        </div>
+    </div>
+</div>

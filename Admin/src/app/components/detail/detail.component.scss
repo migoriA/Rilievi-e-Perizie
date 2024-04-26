@@ -1,0 +1,85 @@
+:host{
+    height: 100%;
+    width: 100%;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding-inline: 1.5rem;
+    flex-direction: column;
+    .row{
+        width:100%
+    }
+    .col{
+        display: flex;
+        align-items: flex-start;
+        width: 20rem;
+        gap: 1rem;
+        flex-direction: column;
+        margin-top: 1.5rem;
+        h1{
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .container-row{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 10rem;
+            p{
+                
+                font-size: 1.5rem;
+                font-weight: bolder;
+            }
+            span{
+                white-space: nowrap;
+                margin-inline-start: 0.5rem;
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #777;
+            }
+        }
+    }
+    .edit{
+        display: flex;
+        margin-top: 1rem;
+        justify-content: flex-end;
+        button{
+            display: flex;
+            text-align: center;
+            padding: 1rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            margin: 0.5rem;
+            &:nth-of-type(2){
+                background-color: #27da30;
+                &:hover{
+                    background-color: #1f9d1f;
+                }
+            }
+            &:nth-of-type(3){
+                background-color: #ff0000;
+                &:hover{
+                    background-color: #d80000;
+                }
+            }
+            &:hover{
+                background-color: #0056b3;
+            }
+            i{
+                display: flex;
+                font-size: 1rem;
+                align-items: center;
+                margin-inline-start: 0.25rem;
+            }
+        }
+    } 
+}

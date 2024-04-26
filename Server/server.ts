@@ -203,6 +203,17 @@ app.post('/api/markers',async (req,res,next)=>{
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
 
+app.post('/api/perizie/:id',async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection('perizie')
+    let rq = collection.findOne({"_id":new ObjectId(req.params.id)})
+    rq.then((data)=>{
+        console.log(data)
+        res.send(data)
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
 //********************************************************************************************//
 // Default route e gestione degli errori
 //********************************************************************************************//

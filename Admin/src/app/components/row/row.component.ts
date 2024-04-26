@@ -1,7 +1,6 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { ListService } from '../../service/list.service';
 import { Router } from '@angular/router';
-import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-row',
@@ -17,7 +16,7 @@ export class RowComponent {
   constructor(private listService:ListService, private router:Router) {  }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    this.router.navigate(['/home/details'], {queryParams: {id: this.selectedId}})
+    this.router.navigate(['/home/details'], {queryParams: {id: this.selectedId, list:this.list.codOp}})
   }
 
   ngOnInit() {
