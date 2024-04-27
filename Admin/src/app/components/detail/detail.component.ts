@@ -45,4 +45,7 @@ export class DetailComponent {
       }
     })
   }
+  map(){
+    this.router.navigate(['/home/map'], {queryParams: {lat: this.listService.user.coor.split(',')[0], lng: this.listService.user.coor.split(',')[1]}})
+  }
 }

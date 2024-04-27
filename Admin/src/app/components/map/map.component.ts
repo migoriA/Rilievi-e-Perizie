@@ -1,6 +1,7 @@
-import { AfterContentChecked, AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import { GoogleMapsModule, MapAdvancedMarker} from '@angular/google-maps';
 import { MapService } from '../../service/map.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-map',
@@ -10,41 +11,38 @@ import { MapService } from '../../service/map.service';
     imports: [GoogleMapsModule, MapAdvancedMarker]
 })
 export class MapComponent implements OnInit{
+    constructor(protected mapsService:MapService, private route: ActivatedRoute) {  }
+    value = this.route.snapshot.queryParams
     maps = window.google.maps
     perizie:any = {}
-    zoom = 10;
-    center: google.maps.LatLngLiteral = {lat: 45.052237, lng: 7.515388};
-    tilt: google.maps.CameraOptions = {heading: 0};
+    zoom = 'lng' in this.value ? 15 : 10;
+    center: google.maps.LatLngLiteral = 'lng' in this.value ? {lat:parseFloat(this.value['lat']),lng:parseFloat(this.value['lng'])} : {lat: 44.555302,lng: 7.7363457};
     options: google.maps.MapOptions = {
         mapTypeId: 'roadmap',
         mapTypeControl: false,
         zoomControl: true,
         scrollwheel: true,
         disableDoubleClickZoom: true,
-        maxZoom: 15,
-        minZoom: 8,
         streetViewControl: false,
         fullscreenControl: false,
-        scaleControl: true
     };
-    markerOptions: google.maps.marker.AdvancedMarkerElementOptions= {
-        gmpClickable: true,
-        gmpDraggable: false,
-        
-    }
+    schoolMarker:any
 
     opzioni:any[] = []
     
     PinElement:any 
 
-    constructor(protected mapsService:MapService) {  }
-
     async ngOnInit(){
         this.perizie = await this.mapsService.getMarkers()
-        console.info(this.perizie)
         this.PinElement = (await this.maps.importLibrary("marker") as google.maps.MarkerLibrary).PinElement;
-        
-        //console.log(this.opzioni.element)
+        this.schoolMarker = new this.PinElement({
+            "background": "#353aba",
+            "borderColor": "#f2f3f5",
+            "glyphColor": "#f2f3f5",
+            "scale": 1.2,
+            "glyph": "🏫",
+        })
+        console.log(this.schoolMarker.element)
         this.opzioni = this.perizie.map((elem:any)=>{
             return new this.PinElement({
                 "background": "#353aba",

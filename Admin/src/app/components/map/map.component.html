@@ -7,12 +7,15 @@
     [zoom]="zoom"
     [options]="options"
     >
+    @if(schoolMarker && schoolMarker.element){
+        <map-advanced-marker [position]="{'lat': 44.555302,'lng': 7.7363457}"
+                            [content]="schoolMarker.element"></map-advanced-marker>
+    }
     @if(perizie && opzioni.length){
         @for(item of dasdsad(); track $index){
             <map-advanced-marker 
                 [position]="{'lat':+item.coor.split(',')[0],'lng':+item.coor.split(',')[1]}"
-                [content]="opzioni[$index].element"
-                [options]="markerOptions">
+                [content]="opzioni[$index].element">
             </map-advanced-marker>
             
         }
