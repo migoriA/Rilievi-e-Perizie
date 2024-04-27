@@ -1,5 +1,5 @@
 import { AfterContentChecked, AfterViewChecked, Component, OnInit } from '@angular/core';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMapsModule, MapAdvancedMarker} from '@angular/google-maps';
 import { MapService } from '../../service/map.service';
 
 @Component({
@@ -7,38 +7,56 @@ import { MapService } from '../../service/map.service';
     templateUrl: './map.component.html',
     styleUrl: './map.component.scss',
     standalone: true,
-    imports: [GoogleMapsModule]
+    imports: [GoogleMapsModule, MapAdvancedMarker]
 })
 export class MapComponent implements OnInit{
+    maps = window.google.maps
     perizie:any = {}
     zoom = 10;
     center: google.maps.LatLngLiteral = {lat: 45.052237, lng: 7.515388};
     tilt: google.maps.CameraOptions = {heading: 0};
     options: google.maps.MapOptions = {
-        mapTypeId: 'hybrid',
+        mapTypeId: 'roadmap',
+        mapTypeControl: false,
         zoomControl: true,
         scrollwheel: true,
         disableDoubleClickZoom: true,
-        maxZoom: 20,
+        maxZoom: 15,
         minZoom: 8,
-        heading: 90,
-        tilt: 45,
-
+        streetViewControl: false,
+        fullscreenControl: false,
+        scaleControl: true
     };
+    markerOptions: google.maps.marker.AdvancedMarkerElementOptions= {
+        gmpClickable: true,
+        gmpDraggable: false,
+        
+    }
+
+    opzioni:any[] = []
     
+    PinElement:any 
 
     constructor(protected mapsService:MapService) {  }
 
-    ngOnInit(){
-        // navigator.geolocation.getCurrentPosition((position) => {
-        //     this.center = {
-        //         lat: position.coords.latitude, lng: position.coords.longitude
-        //     };
-        //     //console.log(this.center)
-        // });
+    async ngOnInit(){
+        this.perizie = await this.mapsService.getMarkers()
+        console.info(this.perizie)
+        this.PinElement = (await this.maps.importLibrary("marker") as google.maps.MarkerLibrary).PinElement;
         
-    
-    
-        this.mapsService.getMarkers()
+        //console.log(this.opzioni.element)
+        this.opzioni = this.perizie.map((elem:any)=>{
+            return new this.PinElement({
+                "background": "#353aba",
+                "borderColor": "#f2f3f5",
+                "glyphColor": "#f2f3f5",
+                "scale": 1.2,
+                "glyph": "📍",
+            })
+        })
+    }
+
+    dasdsad():any[]{
+        return Array.from(this.perizie)
     }
 }

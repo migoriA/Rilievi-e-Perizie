@@ -5,12 +5,18 @@ import { RequestService } from './request.service';
   providedIn: 'root'
 })
 export class MapService {
-  public perizie:any = {}
+  private perizie:any = {}
   constructor(private request:RequestService) { }
 
-  async getMarkers(){
-    await this.request.InviaRichiesta("POST",'/api/markers').then((res)=>{
-      this.perizie = res.data
-    }).catch((err)=>{console.log(err)})
+  getMarkers(){
+    return new Promise<any>((resolve,reject)=>{
+      this.request.InviaRichiesta("POST",'/api/markers').then((res)=>{
+        this.perizie = res.data
+        resolve(this.perizie)
+      }).catch((err)=>{
+        console.log(err)
+        reject()
+      })
+    })
   }
 }

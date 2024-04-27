@@ -196,7 +196,7 @@ app.post('/api/markers',async (req,res,next)=>{
     const client = new MongoClient(connectionString)
     await client.connect()
     const collection = client.db(DBNAME).collection('perizie')
-    let rq = collection.find().toArray()
+    let rq = collection.find().project({_id:0,coor:1}).toArray()
     rq.then((data)=>{
         //console.log(data)
         res.send(data)

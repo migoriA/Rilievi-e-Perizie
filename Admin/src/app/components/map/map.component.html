@@ -1,15 +1,20 @@
 <div class="container">
-    <google-map 
+    <google-map
+    [mapId]="'DEMO_MAP_ID'" 
     height="70%" 
     width="80%" 
     [center]="center"
     [zoom]="zoom"
     [options]="options"
     >
-    @if(mapsService.perizie != {}){
-        @for(item of mapsService.perizie; track mapsService.perizie){
-            <map-marker [position]="{'lat':+item.coor.split(',')[0],'lng':+item.coor.split(',')[1]}"
-                        ></map-marker>
+    @if(perizie && opzioni.length){
+        @for(item of dasdsad(); track $index){
+            <map-advanced-marker 
+                [position]="{'lat':+item.coor.split(',')[0],'lng':+item.coor.split(',')[1]}"
+                [content]="opzioni[$index].element"
+                [options]="markerOptions">
+            </map-advanced-marker>
+            
         }
     }
     </google-map>
