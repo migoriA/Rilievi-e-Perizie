@@ -15,4 +15,8 @@ export class NavBarComponent {
     this.isCollapsed = !this.isCollapsed
     //console.log(this.isCollapsed)
   }
+  onLogOut(){
+    localStorage.removeItem('token')
+    this.router.navigate(['/'])
+  }
 }

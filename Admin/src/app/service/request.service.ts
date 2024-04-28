@@ -45,6 +45,13 @@ axios.interceptors["request"].use((config) => {
 
 axios.interceptors["response"].use((response) => {
   const token = response.headers["authorization"];
-  if(token) localStorage["token"] = token;
+  //console.error("porco dio")
+  if(token)
+  {
+    localStorage["token"] = token
+  }
   return response;
+},(error) => {
+  localStorage.removeItem("token")
+  return Promise.reject(error)
 });

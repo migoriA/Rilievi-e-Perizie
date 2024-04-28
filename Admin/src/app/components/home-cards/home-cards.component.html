@@ -1,45 +1,25 @@
 <div class="container">
-  <div class="card-container">
-    <div class="card">
-      <div class="title">
-        <h2>Numero perizie: </h2>
-      </div>
-      <div class="content">
-        <p>
-          {{form.get('perizieNumber')!.value}}
-        </p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="title">
-        <h2>Numero periti: </h2>
-      </div>
-      <div class="content">
-        <p>
-          {{form.get('workersNumber')!.value}}
-        </p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="title">
-        <h2>Numero clienti: </h2>
-      </div>
-      <div class="content">
-        <p>
-          {{form.get('userNumber')!.value}}
-        </p>
-      </div>
-    </div>
-    <div class="parent">
-      <div class="card">
-        <div class="title">
-          <h2>GUADAGNO</h2>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>Ultime perizie</h3>
+            </div>
+            <div class="card-body">
+                @for(item of homeService.perizie; track $index){
+                    <app-row [list]="item"></app-row>
+                }
+            </div>
         </div>
-        <div class="content">
-          <canvas id="Chart">{{chart}}</canvas>
+        <div class="card">
+            <div class="card-header">
+                <h3>Ultime persone connesse</h3>
+            </div>
+            <div class="card-body">
+                @for(item of homeService.utenti; track $index){
+                    <app-row [list]="item"></app-row>
+                }
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <!--TODO: Rework home page and put the last perizie in a card and in onother card put the last three person who was connected in the mobile application-->

@@ -17,4 +17,7 @@ export class UserListComponent {
     ngOnInit(){
         this.listService.getUser()
     }
+    onAdd(){
+        console.log('add')
+    }
 }

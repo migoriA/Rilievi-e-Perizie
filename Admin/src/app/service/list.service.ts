@@ -16,12 +16,6 @@ export class ListService {
     return this.request.InviaRichiesta("GET","/api/perizie/getPerizie")
   }
 
-  getClients(){
-    this.request.InviaRichiesta("GET","/api/clienti").then((result:any) => {
-      this.clients = result.data;
-    }).catch(err => {console.error(err.message)})
-  }
-
   getUser(){
     this.request.InviaRichiesta("GET","/api/utenti").then((result:any) => {
       this.users = result.data;

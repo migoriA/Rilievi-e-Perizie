@@ -6,21 +6,20 @@ import { AxiosResponse } from 'axios';
   providedIn: 'root'
 })
 export class HomeService {
-
+  perizie: any ; 
+  utenti: any ;
   constructor(private request: RequestService) { }
 
-  getUserNumber(){
-    return this.request.InviaRichiesta("GET",'/api/clienti/number')
-  }
-  getWorkersNumber(){
-    return this.request.InviaRichiesta("GET",'/api/utenti/number')
-  }
-
-  getPerizieNumber(){
-    return this.request.InviaRichiesta("GET",'/api/perizie/number')
-  }
-
-  getChart(){
-    return this.request.InviaRichiesta("POST",'/api/charts')
+  getLastPerizie(){
+    return new Promise<void>((resolve,reject) => {
+      this.request.InviaRichiesta('GET', '/api/homePageData').then((response: AxiosResponse) => {
+        this.perizie = response.data.perizie;
+        this.utenti = response.data.utenti;
+        resolve()
+        console.log(response.data)
+      }).catch((error) => {console.log(error)
+        reject()
+      })
+    })
   }
 }

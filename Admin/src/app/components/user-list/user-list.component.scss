@@ -26,6 +26,15 @@
       width: 33.3%;
       text-align: center;
     }
+    a{
+      margin-inline-start: auto;
+      float: right;
+      width: 33.3%;
+      text-align: center;
+      i:hover{
+        cursor: pointer;  
+      }
+    }
   }
   .divider {
     margin-inline: auto;

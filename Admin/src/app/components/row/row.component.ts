@@ -16,7 +16,9 @@ export class RowComponent {
   constructor(private listService:ListService, private router:Router) {  }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    this.router.navigate(['/home/details'], {queryParams: {id: this.selectedId, list:this.list.codOp}})
+    if(this.router.url == '/home/list'){
+      this.router.navigate(['/home/details'], {queryParams: {id: this.selectedId, list:this.list.codOp}})
+    }
   }
 
   ngOnInit() {
