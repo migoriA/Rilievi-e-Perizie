@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListService } from '../../service/list.service';
 import { GoogleMapsModule } from '@angular/google-maps';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail',
@@ -16,7 +17,9 @@ export class DetailComponent {
   data:any
   ora:any
   indirizzo:any
+  description:any 
   google = window.google
+
   constructor(private route: ActivatedRoute, private router: Router, protected listService: ListService) {}
 
   async ngOnInit() {
@@ -29,6 +32,7 @@ export class DetailComponent {
     this.data = this.data.split('-').reverse().join('/')
     this.ora = this.listService.user.time.split('T')[1]
     this.ora = this.ora.split(':')[0] + ':' + this.ora.split(':')[1]
+    this.description = this.listService.user.desc
 
     let geocoder = new this.google.maps.Geocoder()
     let latlng = {lat: parseFloat(this.listService.user.coor.split(',')[0]), lng: parseFloat(this.listService.user.coor.split(',')[1])}
@@ -48,4 +52,68 @@ export class DetailComponent {
   map(){
     this.router.navigate(['/home/map'], {queryParams: {lat: this.listService.user.coor.split(',')[0], lng: this.listService.user.coor.split(',')[1]}})
   }
+  onModify(){
+    Swal.fire({
+      title: "Modifica perizia",
+      html: `
+      <form id="editForm" class="container" style= '
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    gap: 1rem;'>
+        <div class="form-group" style='display: flex;
+                                       flex-direction: row;
+                                       gap: 0.5rem;'>
+          <label for="description" style='font-size: 1.5rem;font-weight: 600;'>Descrizione: </label>
+          <input type="text" class="form-control" id="description" value="${this.description}" style='padding: 0.5rem;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 0.5rem;'>
+        </div>
+        <div class="form-group" style='display: flex;
+                                      flex-direction: row;
+                                      gap: 0.5rem;'>
+          <label for="date" style='font-size: 1.5rem;font-weight: 600;'>Data: </label>
+          <input type="date" class="form-control" id="date" value="${this.data}" style='padding: 0.5rem;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 0.5rem;'>
+        </div>
+        <div class="form-group" style='display: flex;
+                                      flex-direction: row;
+                                      gap: 0.5rem;'>
+          <label for="time" style='font-size: 1.5rem;font-weight: 600;'>Ora: </label>
+          <input type="time" class="form-control" id="time" value="${this.ora}"style='padding: 0.5rem;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 0.5rem;'>
+        </div>
+      </form>
+    `,
+      showCancelButton: true,
+      confirmButtonText: "Salva",
+      cancelButtonText: "Annulla",
+      width: "40%"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let fields: any = {
+          description: (<HTMLInputElement>document.getElementById("description")).value,
+          date: (<HTMLInputElement>document.getElementById("date")).value,
+          time: (<HTMLInputElement>document.getElementById("time")).value,
+          comments: (document.getElementsByClassName("comment"))
+        }
+        this.substituteFields(this.listService.user, fields);
+        await this.listService.update(this.listService.user);
+      }
+    });
+  }
+  substituteFields(perizia: any, fields: any) {
+
+    perizia.desc = fields.description;
+    perizia.time = fields.date + "T" + fields.time;
+    //perizia.time = fields.time;
+
+    console.log(perizia)
+    return perizia;
+  }
+  
 }

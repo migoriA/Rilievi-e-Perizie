@@ -223,7 +223,17 @@ app.post('/api/perizie/:id',async (req,res,next)=>{
         res.send(data)
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
-
+app.patch('/api/updatePerizia/:id',async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection('perizie')
+    delete req.body._id
+    let rq = collection.replaceOne({"_id":new ObjectId(req.params.id)},req.body)
+    rq.then((data)=>{
+        console.log(data)
+        res.send(data)
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
 //********************************************************************************************//
 // Default route e gestione degli errori
 //********************************************************************************************//

@@ -16,13 +16,13 @@
             </div>
             <div class="container-row">
                 <p>Descrizione: </p>
-                <span>{{listService.user.desc}}</span>
+                <span>{{description}}</span>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="edit">
-            <button>Modifica <i class='bx bxs-edit'></i></button>
+            <button (click)="onModify()">Modifica <i class='bx bxs-edit'></i></button>
             <button (click)="map()">Mappa <i class='bx bx-map-pin' ></i></button>
             <button>Visualizza immagini <i class='bx bx-image' ></i></button>
         </div>
