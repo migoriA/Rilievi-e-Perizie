@@ -59,7 +59,8 @@ export class DetailComponent {
       <form id="editForm" class="container" style= '
                                                     display: flex;
                                                     flex-direction: column;
-                                                    gap: 1rem;'>
+                                                    gap: 1rem;
+                                                    margin-top:0.5rem;'>
         <div class="form-group" style='display: flex;
                                        flex-direction: row;
                                        gap: 0.5rem;'>
@@ -80,7 +81,8 @@ export class DetailComponent {
         </div>
         <div class="form-group" style='display: flex;
                                       flex-direction: row;
-                                      gap: 0.5rem;'>
+                                      gap: 0.5rem;
+                                      margin-bottom: 0.5rem;'>
           <label for="time" style='font-size: 1.5rem;font-weight: 600;'>Ora: </label>
           <input type="time" class="form-control" id="time" value="${this.ora}"style='padding: 0.5rem;
           font-size: 1rem;
@@ -90,6 +92,7 @@ export class DetailComponent {
       </form>
     `,
       showCancelButton: true,
+      confirmButtonColor: '#3d43e0',
       confirmButtonText: "Salva",
       cancelButtonText: "Annulla",
       width: "40%"

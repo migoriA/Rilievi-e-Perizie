@@ -8,6 +8,7 @@ import _cors from "cors";
 import { MongoClient, ObjectId } from "mongodb";
 import _bcrypt from "bcryptjs";
 import _jwt from "jsonwebtoken";
+import _nodemailer from "nodemailer";
 
 _dotenv.config({ "path": ".env" });
 
@@ -77,7 +78,15 @@ const corsOptions = {
 };
 app.use("/", _cors(corsOptions));
 
-app.get('/api/figa', (req, res) => {res.send("Ciao")})
+const auth = {
+    "user": process.env.EMAIL_USER,
+    "pass": process.env.EMAIL_PASS
+}
+const trasporter = _nodemailer.createTransport({
+    "service": "gmail",
+    "auth": auth
+})
+let msg = _fs.readFileSync("./message.html", "utf8")
 
 //********************************************************************************************//
 
@@ -235,13 +244,38 @@ app.patch('/api/updatePerizia/:id',async (req,res,next)=>{
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
 
+const GeneraCodice = () => {
+    const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numeri = "0123456789";
+    const c = alfabeto + numeri;
+
+    const Carattere = () => c.charAt(Math.floor(Math.random() * c.length))
+
+    return new Array(6).fill('').reduce((acc) => acc + Carattere(), "");
+}
+
 app.post("/api/addUser", async (req,res,next)=>{
     const client = new MongoClient(connectionString)
+    let user = req.body
     await client.connect()
+    let password = GeneraCodice()
+    user.password = _bcrypt.hashSync(password,10)
     const collection = client.db(DBNAME).collection("utenti")
-    let rq = collection.insertOne(req.body)
+    let rq = collection.insertOne(user)
     rq.then((data)=>{
-        res.send(data)
+        msg = msg.replace("__user", user.email).replace("__password", password)
+        console.log(auth)
+        let mailOptions = {
+            "from": auth.user,
+            "to": user.email,
+            "subject": "Registrazione avvenuta con successo",
+            "html": msg
+        }
+        trasporter.sendMail(mailOptions, (err, info) => {
+            console.log(info);
+            console.log(err)
+            if(!err) res.send(data)
+        });
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
 //********************************************************************************************//

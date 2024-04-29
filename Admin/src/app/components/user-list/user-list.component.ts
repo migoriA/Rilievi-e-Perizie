@@ -30,7 +30,8 @@ export class UserListComponent {
                                                           gap: 1rem;'>
               <div class="form-group" style='display: flex;
                                              flex-direction: row;
-                                             gap: 0.5rem;'>
+                                             gap: 0.5rem;
+                                             margin-top: 0.5rem;'>
                 <label for="name" style='font-size: 1.5rem;font-weight: 600;'>Nome: </label>
                 <input type="text" class="form-control" id="name" value="${this.name}" style='padding: 0.5rem;
                 font-size: 1rem;
@@ -39,7 +40,8 @@ export class UserListComponent {
               </div>
               <div class="form-group" style='display: flex;
                                             flex-direction: row;
-                                            gap: 0.5rem;'>
+                                            gap: 0.5rem;
+                                            margin-bottom:0.5rem;'>
                 <label for="email" style='font-size: 1.5rem;font-weight: 600;'>Email: </label>
                 <input type="text" class="form-control" id="email" value="${this.email}" style='padding: 0.5rem;
                 font-size: 1rem;
@@ -50,8 +52,10 @@ export class UserListComponent {
           `,
             showCancelButton: true,
             confirmButtonText: "Salva",
+            confirmButtonColor: '#3d43e0',
             cancelButtonText: "Annulla",
-            width: "40%"
+            width: "40%",
+            heightAuto:true
           }).then(async (result) => {
                 if (result.isConfirmed) {
                     let fields: any = {
