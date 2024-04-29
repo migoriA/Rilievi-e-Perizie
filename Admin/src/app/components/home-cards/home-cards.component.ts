@@ -19,6 +19,7 @@ export class HomeCardsComponent {
     console.log(this.homeService.perizie)
     this.homeService.perizie.forEach((perizia:any) => {
       delete perizia.coor
+      delete perizia.img
     })
     this.homeService.perizie = this.homeService.perizie.map((p:any) => {
       const utenti = this.homeService.utenti;

@@ -9,6 +9,7 @@ import { MongoClient, ObjectId } from "mongodb";
 import _bcrypt from "bcryptjs";
 import _jwt from "jsonwebtoken";
 import _nodemailer from "nodemailer";
+import {v2 as cloudinary} from 'cloudinary';
 
 _dotenv.config({ "path": ".env" });
 
@@ -26,6 +27,11 @@ const SIMMETRIC_KEY = process.env.SIMMETRIC_KEY
 const CREDENTIALS = { "key": PRIVATE_KEY, "cert": CERTIFICATE };
 const https_server = _https.createServer(CREDENTIALS, app);
 
+cloudinary.config({
+    cloud_name: 'dsvyvqyrs',
+    api_key: '857761641898518',
+    api_secret:'a_kFO24wJBg-H6hHbd9NPMYEbrQ'
+})
 
 https_server.listen(HTTPS_PORT, () => {
     init();

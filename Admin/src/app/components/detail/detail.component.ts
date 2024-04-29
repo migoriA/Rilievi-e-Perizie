@@ -106,8 +106,8 @@ export class DetailComponent {
         }
         this.substituteFields(this.listService.user, fields);
         await this.listService.update(this.listService.user);
-      }
-    });
+      }
+    });
   }
   substituteFields(perizia: any, fields: any) {
 
@@ -116,7 +116,26 @@ export class DetailComponent {
     //perizia.time = fields.time;
 
     console.log(perizia)
-    return perizia;
-  }
+    return perizia;
+  }
+  onViewImg(){
+    let img = this.listService.user.img
+    let imgTag = ""
+    console.log(img)
+    img.forEach((i:any) => {
+      imgTag += `<img src="${i}" style='width:100%;height:100%;object-fit:contain;margin:0.5rem;'/>`
+    })
+    Swal.fire({
+      title: 'Immagini',
+      html: `
+        <div style='width:100%;height:80vh!important;overflow:scroll;overflow-x:hidden;'>
+          ${imgTag}
+        </div>
+      `,
+      showCloseButton: true,
+      showConfirmButton: false,
+      width: '50%'
+    })
+  }
   
 }
