@@ -234,6 +234,16 @@ app.patch('/api/updatePerizia/:id',async (req,res,next)=>{
         res.send(data)
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
+
+app.post("/api/addUser", async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection("utenti")
+    let rq = collection.insertOne(req.body)
+    rq.then((data)=>{
+        res.send(data)
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
 //********************************************************************************************//
 // Default route e gestione degli errori
 //********************************************************************************************//

@@ -11,6 +11,7 @@ export class ListService {
   public users:any = {};
   public clients:any = {};
   public user:any = {};
+  public maxId = 0
 
   constructor(private request:RequestService,private router:Router) { }
 
@@ -19,9 +20,16 @@ export class ListService {
   }
 
   getUser(){
-    this.request.InviaRichiesta("GET","/api/utenti").then((result:any) => {
-      this.users = result.data;
-    }).catch(err => {console.error(err.message)})
+    return new Promise<void>((resolve, reject) => {
+      this.request.InviaRichiesta("GET","/api/utenti").then((result:any) => {
+        this.users = result.data.filter((user:any) => !isNaN(user._id));
+        this.maxId = Math.max(...this.users.map(function(o:any) { return o._id; }))
+        resolve()
+      }).catch(err => {
+        console.error(err.message)
+        reject(err)
+      })
+    })
   }
 
   getDetails(id: any) {
@@ -49,5 +57,19 @@ export class ListService {
           resolve();
        });
     });
+  }
+  addUser(field:any){
+    return new Promise<void>((resolve, reject) => {
+      this.request.InviaRichiesta("POST","/api/addUser",field).then(async(result:any) => {
+        await this.getUser()
+        Swal.fire("Utente aggiunto", "", "success")
+        this.router.navigate(['/home/userlist'])
+        resolve()
+      })
+      .catch(err => {
+        console.error(err.message)
+        reject(err)
+      })
+    })
   }
 }
