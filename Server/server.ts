@@ -28,9 +28,9 @@ const CREDENTIALS = { "key": PRIVATE_KEY, "cert": CERTIFICATE };
 const https_server = _https.createServer(CREDENTIALS, app);
 
 cloudinary.config({
-    cloud_name: 'dsvyvqyrs',
-    api_key: '857761641898518',
-    api_secret:'a_kFO24wJBg-H6hHbd9NPMYEbrQ'
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.api_secret
 })
 
 https_server.listen(HTTPS_PORT, () => {
