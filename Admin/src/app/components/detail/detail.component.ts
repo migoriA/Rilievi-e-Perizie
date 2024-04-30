@@ -52,6 +52,23 @@ export class DetailComponent {
     this.router.navigate(['/home/map'], {queryParams: {lat: this.listService.user.coor.split(',')[0], lng: this.listService.user.coor.split(',')[1]}})
   }
   onModify(){
+    let img = this.listService.user.img
+    let commentsTag = ""
+    img.forEach((i:any,index:number) => {
+      if('url' in i){
+        commentsTag += `<div class="form-group" style='display: flex;
+                                                      flex-direction: row;
+                                                      gap: 0.5rem;
+                                                      margin-bottom: 0.5rem;'>
+                            <label for="text" style='font-size: 1.5rem;font-weight: 600;'>Commento ${index}: </label>
+                            <input type="text" class="form-control comment" id="${i.url}" value="${i.desc}" style='padding: 0.5rem;
+                                                                                                            font-size: 1rem;
+                                                                                                            border: 1px solid #ccc;
+                                                                                                            border-radius: 0.5rem;'>
+                        </div>`
+      }
+    })
+
     Swal.fire({
       title: "Modifica perizia",
       html: `
@@ -88,6 +105,7 @@ export class DetailComponent {
           border: 1px solid #ccc;
           border-radius: 0.5rem;'>
         </div>
+        ${commentsTag}
       </form>
     `,
       showCancelButton: true,
@@ -109,9 +127,15 @@ export class DetailComponent {
     });
   }
   substituteFields(perizia: any, fields: any) {
+    let comments: any = [];
+
+    for (let i = 0; i < fields.comments.length; i++) {
+      comments.push({ "url": fields.comments[i].id,"desc": fields.comments[i].value});
+    }
 
     perizia.desc = fields.description;
     perizia.time = fields.date + "T" + fields.time;
+    perizia.img = comments;
     //perizia.time = fields.time;
 
     console.log(perizia)
@@ -122,7 +146,7 @@ export class DetailComponent {
     let imgTag = ""
     console.log(img)
     img.forEach((i:any) => {
-      imgTag += `<img src="${i}" style='width:100%;height:100%;object-fit:contain;margin:0.5rem;'/>`
+      imgTag += `<img src="${i.url}" style='width:100%;object-fit:contain;margin:0.5rem;'/> <span>${i.desc}</span>`
     })
     Swal.fire({
       title: 'Immagini',

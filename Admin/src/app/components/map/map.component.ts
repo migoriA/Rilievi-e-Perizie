@@ -113,6 +113,4 @@ export class MapComponent implements OnInit{
             this.router.navigate(['/home/details'], {queryParams: {id: _t6['_id']}});
         }
     }
-
-    //TODO: Implementare commenti della immagine e la possibilità di modificarli
 }

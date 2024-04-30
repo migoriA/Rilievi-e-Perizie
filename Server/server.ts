@@ -194,9 +194,11 @@ app.use("/api/", (req,res,next) => {
 
 const StringaInData = (data: string) => {
     const [dataStr, ora] = data.split("T")
+    //console.log(dataStr,ora)
     const [anno, mese, giorno] = dataStr.split("-").map(c => +c)
-    const [ore, minuti, secondi] = ora.split(":").map(c => +c)
-    return new Date(anno, mese - 1, giorno, ore, minuti, secondi)
+    //console.log(anno,mese,giorno)
+    const [ore, minuti] = ora.split(":").map(c => +c)
+    return new Date(anno, mese - 1, giorno, ore, minuti)
 }
 app.get("/api/homePageData",async (req,res,next)=>{
     console.log("Ciao")
@@ -205,16 +207,15 @@ app.get("/api/homePageData",async (req,res,next)=>{
     const collection = client.db(DBNAME).collection("perizie")
     let rq = collection.find().toArray()
     rq.then((data)=>{
-        //console.log(data)
         data = data.sort((a,b)=>{
             return StringaInData(b.time).getTime() - StringaInData(a.time).getTime()
         }).slice(0,3)
         //console.log(data)
-        console.log(data.map((a)=> a.codOp))
+        //console.log(data.map((a)=> a.codOp))
         let rq2 = client.db(DBNAME).collection("utenti").find().toArray().then((data2)=>{
             //console.log(data2.filter((a)=> data.map((b)=> b.codOp).includes(a._id)))
             data2 = data2.filter((a)=> data.map((b)=> +b.codOp).includes(a._id as any))
-            console.log(data2)
+            //console.log(data2)
             res.send({"perizie":data,"utenti":data2})
         }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)})
