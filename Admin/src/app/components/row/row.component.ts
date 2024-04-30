@@ -17,7 +17,7 @@ export class RowComponent {
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
     if(this.router.url == '/home/list'){
-      this.router.navigate(['/home/details'], {queryParams: {id: this.selectedId, list:this.list.codOp}})
+      this.router.navigate(['/home/details'], {queryParams: {id: this.selectedId}})
     }
   }
 

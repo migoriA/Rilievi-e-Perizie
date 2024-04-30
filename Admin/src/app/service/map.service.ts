@@ -19,4 +19,14 @@ export class MapService {
       })
     })
   }
+  getDestination(id: any) {
+    let coor = ''
+    this.request.InviaRichiesta("POST",'/api/destination/'+id).then((res)=>{
+       coor = res.data
+    }).catch((err)=>{
+      console.log(err)
+    })
+
+    return coor
+  }
 }

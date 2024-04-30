@@ -244,7 +244,7 @@ app.post('/api/markers',async (req,res,next)=>{
     const client = new MongoClient(connectionString)
     await client.connect()
     const collection = client.db(DBNAME).collection('perizie')
-    let rq = collection.find().project({_id:0,coor:1}).toArray()
+    let rq = collection.find().project({_id:1,coor:1}).toArray()
     rq.then((data)=>{
         //console.log(data)
         res.send(data)
@@ -306,6 +306,17 @@ app.post("/api/addUser", async (req,res,next)=>{
             if(!err) res.send(data)
         });
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
+
+app.post("/api/destination/:id",async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection('perizie')
+    let rq = collection.findOne({_id : new ObjectId(req.params.id)})
+    rq.then((result)=>{
+        console.log(result.coor)
+        res.send(result)
+    }).catch((err)=>{res.status(500).send('Errore esecuzione query ' + err.message)}).finally(()=>client.close())
 })
 //********************************************************************************************//
 // Default route e gestione degli errori

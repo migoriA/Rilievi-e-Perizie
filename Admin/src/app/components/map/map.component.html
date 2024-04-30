@@ -1,5 +1,5 @@
 <div class="container">
-    <google-map
+    <google-map #map
     [mapId]="'DEMO_MAP_ID'" 
     height="70%" 
     width="80%" 
@@ -13,11 +13,10 @@
     }
     @if(perizie && opzioni.length){
         @for(item of dasdsad(); track $index){
-            <map-advanced-marker 
+            <map-advanced-marker (mapClick)="onMarkerClick($event, item)" [id]="item._id"
                 [position]="{'lat':+item.coor.split(',')[0],'lng':+item.coor.split(',')[1]}"
                 [content]="opzioni[$index].element">
             </map-advanced-marker>
-            
         }
     }
     </google-map>

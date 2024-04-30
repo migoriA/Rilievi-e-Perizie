@@ -24,7 +24,6 @@ export class DetailComponent {
 
   async ngOnInit() {
     this.id = this.route.queryParams;
-    this.name = this.route.snapshot.queryParams['list'];
     await this.listService.getDetails(this.id._value.id)
     console.log(this.name)  
     console.log(this.listService.user)

@@ -1,7 +1,8 @@
-import { AfterContentChecked, AfterViewChecked, Component, Input, OnInit } from '@angular/core';
-import { GoogleMapsModule, MapAdvancedMarker} from '@angular/google-maps';
+import { AfterContentChecked, AfterViewChecked, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { GoogleMapsModule, MapAdvancedMarker, MapInfoWindow, MapMarker} from '@angular/google-maps';
 import { MapService } from '../../service/map.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-map',
@@ -11,12 +12,13 @@ import { ActivatedRoute } from '@angular/router';
     imports: [GoogleMapsModule, MapAdvancedMarker]
 })
 export class MapComponent implements OnInit{
-    constructor(protected mapsService:MapService, private route: ActivatedRoute) {  }
+    constructor(protected mapsService:MapService, private route: ActivatedRoute, private router:Router) {  }
+    @ViewChild('map') map:any
     value = this.route.snapshot.queryParams
-    maps = window.google.maps
+    maps:any = window.google.maps
     perizie:any = {}
-    zoom = 'lng' in this.value ? 15 : 10;
-    center: google.maps.LatLngLiteral = 'lng' in this.value ? {lat:parseFloat(this.value['lat']),lng:parseFloat(this.value['lng'])} : {lat: 44.555302,lng: 7.7363457};
+    zoom = 10;
+    center: google.maps.LatLngLiteral = {lat: 44.555302,lng: 7.7363457};
     options: google.maps.MapOptions = {
         mapTypeId: 'roadmap',
         mapTypeControl: false,
@@ -27,6 +29,7 @@ export class MapComponent implements OnInit{
         fullscreenControl: false,
     };
     schoolMarker:any
+    infoContent:any = ""
 
     opzioni:any[] = []
     
@@ -42,7 +45,6 @@ export class MapComponent implements OnInit{
             "scale": 1.2,
             "glyph": "🏫",
         })
-        console.log(this.schoolMarker.element)
         this.opzioni = this.perizie.map((elem:any)=>{
             return new this.PinElement({
                 "background": "#353aba",
@@ -52,13 +54,65 @@ export class MapComponent implements OnInit{
                 "glyph": "📍",
             })
         })
-    }
 
+        if('lng' in this.value){
+            this.getDirections(this.value['lat'],this.value['lng'])
+        }
+    }
+    latLng:any
+    async getDirections(lat:any,lng:any) {
+        const destination = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        const directionsService = new this.maps.DirectionsService()
+        const directionsRenderer = new this.maps.DirectionsRenderer()
+        
+        this.latLng = destination
+        this.map.panTo(destination);
+        directionsRenderer.setMap(null);
+        directionsRenderer.setMap(this.map.googleMap!);
+        directionsRenderer.setPanel(null);
+    
+        const request: google.maps.DirectionsRequest = {
+          origin: {lat: 44.555302,lng: 7.7363457},
+          destination: destination,
+          travelMode: this.maps.TravelMode.DRIVING, // BICYCLING, DRIVING, TRANSIT, WALKING
+          provideRouteAlternatives: true
+        };
+    
+        directionsService.route(request, (result:any, status:any) => {
+            if (status === this.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(result);
+                this.infoContent = result.routes[0].legs[0].distance.text + ' - ' + result.routes[0].legs[0].duration.text
+            } else {
+                console.error('Errore durante il calcolo del percorso:', status);
+            }
+        });
+    }
     dasdsad():any[]{
+        console.log(this.perizie)
         return Array.from(this.perizie)
     }
 
-    //TODO: Implementare la funzione click sul marker che redirecta alla pag dettagli perizia
-    //TODO: Sul click del pulsante mappa nella sezione dettagli perizia redirecta sulla mappa e crea il percorso della perizia
+    onMarkerClick($event: google.maps.MapMouseEvent,_t6: any) {
+        let markerPos = {
+            lat: $event.latLng!.lat(),
+            lng: $event!.latLng!.lng()
+        }
+        console.log(_t6._id)
+        if(JSON.stringify(markerPos) == JSON.stringify(this.latLng)){
+            Swal.fire({
+                title: "Tempo stimato",
+                text: this.infoContent,
+                confirmButtonText: "Chiudi",
+            }).then((result) => {
+                if(result.isConfirmed){
+                    this.router.navigate(['/home/details'], {queryParams: {id: _t6['_id']}});
+                }
+            })
+        }
+        if(!('lng' in this.value)){
+            this.router.navigate(['/home/details'], {queryParams: {id: _t6['_id']}});
+        }
+    }
+
     //TODO: Implementare commenti della immagine e la possibilità di modificarli
 }
