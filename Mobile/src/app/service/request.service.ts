@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { switchAll } from 'rxjs';
-import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -54,17 +54,7 @@ axios.interceptors["response"].use((response) => {
     localStorage["token"] = token
   }
   return response;
-},(error: AxiosError) => {
-  if(error.response?.status === 403){
-    localStorage.removeItem("token")
-    Swal.fire({
-      title: 'Errore',
-      text: 'Sessione scaduta',
-      icon: 'error',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      window.location.href = "/login"
-    })
-  }
+},(error) => {
+  localStorage.removeItem("token")
   return Promise.reject(error)
 });

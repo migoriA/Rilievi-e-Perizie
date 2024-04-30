@@ -99,38 +99,61 @@ let msg = _fs.readFileSync("./message.html", "utf8")
 app.post("/api/login",async (req, res, next) => {
     let user = req.body.username
     let pass = req.body.password
+    let reg = new RegExp(`^${user}$`,"i")
+    let filter = {"name":reg}
 
+    if(user === 'Admin'){
+        logIn(user,pass,res,req,filter)
+    }
+    else{
+        res.status(401).send("Username non trovato")
+    }
+})
+
+app.post("/api/userLogin",(req,res,next)=>{
+    let user = req.body.username
+    let pass = req.body.password
+    let reg = new RegExp(`^${user}$`,"i")
+    let filter = {"email":reg}
+
+    if(user !== 'Admin'){
+        logIn(user,pass,res,req,filter)
+    }
+    else{
+        res.status(401).send("Username non trovato")
+    }
+})
+
+async function logIn(user,pass,res,req,filter){
     const client = new MongoClient(connectionString)
     await client.connect()
     const collection = client.db(DBNAME).collection("utenti")
-    let reg = new RegExp(`^${user}$`,"i")
-    let rq = collection.findOne({"name":reg},{"projection":{"name":1,"password":1}})
+
+    let rq = collection.findOne(filter,{"projection":{"name":1,"password":1}})
     rq.then((data)=>{
         if(!data){
             res.status(401).send("Username non trovato")
         }
-        else if(data.name === "Admin"){
-            _bcrypt.compare(pass, data.password,(err,result)=>{
-                if(err){
-                    res.status(500).send("bcrypt compare error" + err.message)
+        _bcrypt.compare(pass, data.password,(err,result)=>{
+            if(err){
+                res.status(500).send("bcrypt compare error" + err.message)
+            }
+            else{
+                if(!result){
+                    res.status(401).send("Password errata")
                 }
                 else{
-                    if(!result){
-                        res.status(401).send("Password errata")
-                    }
-                    else{
-                        let token = creaToken(data)
-                        console.log(token)
-                        res.setHeader("authorization",token)
-                        //! Fa si che la header authorization venga restituita al client
-                        res.setHeader("access-control-expose-headers","authorization")
-                        res.send({"ris":"ok"})
-                    }
+                    let token = creaToken(data)
+                    console.log(token)
+                    res.setHeader("authorization",token)
+                    //! Fa si che la header authorization venga restituita al client
+                    res.setHeader("access-control-expose-headers","authorization")
+                    res.send({"ris":"ok"})
                 }
-            })
-        }
+            }
+        })
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
-})
+}
 
 function creaToken(user){
     let currentDate = Math.floor(new Date().getTime() / 1000)

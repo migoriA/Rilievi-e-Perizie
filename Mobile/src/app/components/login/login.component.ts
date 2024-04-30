@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl,FormGroup,Validators,ReactiveFormsModule,} from '@angular/forms';
 import {IonApp,IonRouterOutlet,IonContent,IonCard,IonItem,IonInput,IonButton,IonCardHeader,IonCardContent,IonCardTitle,IonLabel,IonHeader,IonToolbar,IonTitle,} from '@ionic/angular/standalone';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -30,11 +31,11 @@ export class LoginComponent implements OnInit {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
-  constructor() {}
+  constructor(private loginService:LoginService) {}
 
   ngOnInit() {}
 
   onLogIn(){
-    console.log(this.form.controls['username'].value);
+    this.loginService.login(this.form.controls['username'].value, this.form.controls['password'].value)
   }
 }

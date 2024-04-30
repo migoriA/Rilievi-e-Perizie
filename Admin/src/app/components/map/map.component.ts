@@ -57,4 +57,8 @@ export class MapComponent implements OnInit{
     dasdsad():any[]{
         return Array.from(this.perizie)
     }
+
+    //TODO: Implementare la funzione click sul marker che redirecta alla pag dettagli perizia
+    //TODO: Sul click del pulsante mappa nella sezione dettagli perizia redirecta sulla mappa e crea il percorso della perizia
+    //TODO: Implementare commenti della immagine e la possibilità di modificarli
 }
