@@ -1,0 +1,18 @@
+@for(item of homeService.perizie;track $index){
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Perizia {{$index+1}}
+      </ion-card-title>
+      <ion-card-subtitle>
+        {{date[$index]}}   {{time[$index]}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content style="display: flex;flex-direction: column;height: fit-content;">
+      <ion-label color="dark">Descrizione: </ion-label>
+      <span>{{item.desc}}</span> <br>
+      <ion-label color="dark">Indirizzo: </ion-label>
+      <span>{{indirizzi[$index]}}</span>
+    </ion-card-content>
+  </ion-card>
+}

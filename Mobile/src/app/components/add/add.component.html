@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Aggiungi perizia
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form style="width: 100%;">
+    <ion-item>
+      <ion-textarea label="Dettagli: " placeholder="Type something here" [(ngModel)]="desc" name="textarea"></ion-textarea>
+    </ion-item>
+    
+    
+    <ion-grid>
+      <ion-row>
+        @for(photo of photoService.photos; track $index){
+          <ion-col size="6">
+            <ion-img [src]="photo.webviewPath" [id]="''+$index"></ion-img>
+            <ion-input style="width: 100%;" type="text" placeholder="Commento...." [(ngModel)]="photoService.comments[$index]" [name]="''+$index"></ion-input>
+            <ion-action-sheet (didDismiss)="logResult($event)" [trigger]="''+$index" [buttons]="actionSheetButtons"></ion-action-sheet>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+<ion-button expand="block" (click)="onPic()"><ion-icon name="camera"></ion-icon></ion-button>
+<ion-button expand="block" (click)="onAdd()">Aggiungi</ion-button>

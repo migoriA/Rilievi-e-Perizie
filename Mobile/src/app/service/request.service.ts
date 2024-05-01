@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, {AxiosError, AxiosRequestConfig } from 'axios';
 import { switchAll } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { switchAll } from 'rxjs';
 })
 export class RequestService {
 
-  constructor() { }
+  constructor(public alertController: AlertController) { }
 
   async InviaRichiesta(method : string, url : string, parameters : object = {}) {
     const config : AxiosRequestConfig = {
@@ -54,7 +55,20 @@ axios.interceptors["response"].use((response) => {
     localStorage["token"] = token
   }
   return response;
-},(error) => {
-  localStorage.removeItem("token")
+},async (error:AxiosError) => {
+  if(error.response?.status === 403){
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    let r = new RequestService(new AlertController()) 
+    const alert = await r.alertController.create({
+      header: 'Errore',
+      message: 'Sessione scaduta, effettuare nuovamente il login',
+      buttons: ['Ok'],
+    });
+
+    alert.present().then(()=>{
+      window.location.href = "/tabs/tab1"
+    })
+  }
   return Promise.reject(error)
 });

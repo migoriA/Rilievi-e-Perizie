@@ -5,7 +5,7 @@ import _fs from "fs";
 import _express from "express";
 import _dotenv from "dotenv";
 import _cors from "cors";
-import { MongoClient, ObjectId } from "mongodb";
+import {Db, MongoClient, ObjectId} from "mongodb";
 import _bcrypt from "bcryptjs";
 import _jwt from "jsonwebtoken";
 import _nodemailer from "nodemailer";
@@ -25,7 +25,7 @@ const PRIVATE_KEY = _fs.readFileSync("./keys/privateKey.pem", "utf8");
 const CERTIFICATE = _fs.readFileSync("./keys/certificate.crt", "utf8");
 const SIMMETRIC_KEY = process.env.SIMMETRIC_KEY
 const CREDENTIALS = { "key": PRIVATE_KEY, "cert": CERTIFICATE };
-const https_server = _https.createServer(CREDENTIALS, app);
+const https_server = _http.createServer(app);
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
@@ -148,7 +148,7 @@ async function logIn(user,pass,res,req,filter){
                     res.setHeader("authorization",token)
                     //! Fa si che la header authorization venga restituita al client
                     res.setHeader("access-control-expose-headers","authorization")
-                    res.send({"ris":"ok"})
+                    res.send(user)
                 }
             }
         })
@@ -165,7 +165,41 @@ function creaToken(user){
     }
     return _jwt.sign(payLoad, SIMMETRIC_KEY)
 }
+const GeneraCodice = () => {
+    const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numeri = "0123456789";
+    const c = alfabeto + numeri;
 
+    const Carattere = () => c.charAt(Math.floor(Math.random() * c.length))
+
+    return new Array(6).fill('').reduce((acc) => acc + Carattere(), "");
+}
+
+app.post("/api/modifyPassword", async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    let user = req.body
+    await client.connect()
+    let password = GeneraCodice()
+    user.password = _bcrypt.hashSync(password,10)
+    const collection = client.db(DBNAME).collection("utenti")
+    let rq = collection.updateOne({email: user.username}, {$set:{password:user.password}})
+    rq.then((data)=>{
+        msg = msg.replace("__user", user.username).replace("__password", password)
+        console.log(auth)
+        console.log(password)
+        let mailOptions = {
+            "from": auth.user,
+            "to": user.username,
+            "subject": "Rigenera password avvenuta",
+            "html": msg
+        }
+        trasporter.sendMail(mailOptions, (err, info) => {
+            console.log(info);
+            console.log(err)
+            if(!err) res.send(data)
+        });
+    }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
+})
 
 app.use("/api/", (req,res,next) => {
     if(!req.headers["authorization"]){
@@ -274,15 +308,7 @@ app.patch('/api/updatePerizia/:id',async (req,res,next)=>{
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
 
-const GeneraCodice = () => {
-    const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const numeri = "0123456789";
-    const c = alfabeto + numeri;
 
-    const Carattere = () => c.charAt(Math.floor(Math.random() * c.length))
-
-    return new Array(6).fill('').reduce((acc) => acc + Carattere(), "");
-}
 
 app.post("/api/addUser", async (req,res,next)=>{
     const client = new MongoClient(connectionString)
@@ -309,6 +335,8 @@ app.post("/api/addUser", async (req,res,next)=>{
     }).catch((err)=>{res.status(500).send("Errore esecuzione query "+ err.message)}).finally(() => client.close())
 })
 
+
+
 app.post("/api/destination/:id",async (req,res,next)=>{
     const client = new MongoClient(connectionString)
     await client.connect()
@@ -318,6 +346,54 @@ app.post("/api/destination/:id",async (req,res,next)=>{
         console.log(result.coor)
         res.send(result)
     }).catch((err)=>{res.status(500).send('Errore esecuzione query ' + err.message)}).finally(()=>client.close())
+})
+
+app.post("/api/userHomeMobile", async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection('utenti')
+    //console.log(req.body.user)
+    let rq = collection.find({'email':req.body.user}).project({'_id':1}).toArray()
+    rq.then((data)=>{
+        //console.log(data)
+        const collection2 = client.db(DBNAME).collection('perizie')
+        //console.log(data[0]._id)
+        let rq2 = collection2.find({'codOp':(data[0]._id).toString()}).toArray()
+        rq2.then(data2 =>{
+            res.send({'codOp': data[0]._id,'perizie':data2})
+        }).catch(err => res.status(500).send("Errore esecuzione query "+ err.message)).finally(() => client.close())
+    }).catch(err => res.status(500).send("Errore esecuzione query "+ err.message))
+
+})
+
+app.post("/api/addPerizia",async (req,res,next)=>{
+    const client = new MongoClient(connectionString)
+    await client.connect()
+    const collection = client.db(DBNAME).collection('perizie')
+    let perizia = req.body.perizia
+    let map = perizia.img.map((i)=>{
+        return new Promise((resolve,reject)=>{
+            cloudinary.uploader.upload(i.url, { "folder": "RilieviEPerizie" })
+            .catch((err) => {
+                resolve(undefined)
+            })
+            .then(async function (response: any) {
+                resolve(response.secure_url)
+            });
+        })
+    })
+    map = await Promise.all(map)
+    if(map.some(m=>!m)){
+        res.status(500).send(`Error while uploading file on Cloudinary:`);
+        return
+    }
+    perizia.img.forEach((p,indice)=>{
+        perizia.img[indice].url = map[indice]
+    })
+    let rq = collection.insertOne(perizia)
+    rq.then(result=>{
+        res.send("Ok")
+    }).catch(err => res.status(500).send("errore")).finally(()=>client.close())
 })
 //********************************************************************************************//
 // Default route e gestione degli errori
