@@ -13,7 +13,7 @@ export class RequestService {
 
   async InviaRichiesta(method : string, url : string, parameters : object = {}) {
     const config : AxiosRequestConfig = {
-      "baseURL": 'https://localhost:3000',
+      "baseURL": 'https://server-rilievieperizie.onrender.com',
       "url":  url, 
       "method": method.toString(),
       "headers": {

@@ -3,7 +3,12 @@
     <ion-title>
       Bentornato
     </ion-title>
-    <ion-buttons slot="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="onGoOut()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
       <ion-button (click)="onClick()">
         <ion-icon name="add-circle"></ion-icon>
       </ion-button>
